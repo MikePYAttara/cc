@@ -23,7 +23,6 @@ $(document).ready(() => {
 
 	// Populating the select controls
 	function loadCurrenciesOnline() {
-		$("#output").text("Loading currencies...");
 		$.ajax({
 		        type: 'GET',
 		        url: "https://free.currencyconverterapi.com/api/v5/currencies",
@@ -46,19 +45,17 @@ $(document).ready(() => {
 						    currencyListHtml += `<option value=${objRecord.id}> [${objRecord.id}] ${objRecord.currencyName} </option>`;
 						    cursor.continue();
 						  }
-						$( "#fromCurrency" ).html(`<option value="">Select the From Currency</option>` + currencyListHtml);
-						$( "#toCurrency" ).html(`<option value="">Select the To Currency</option>` + currencyListHtml);
+						$( "#from-currency" ).html(`<option value="">Select the From Currency</option>` + currencyListHtml);
+						$( "#to-currency" ).html(`<option value="">Select the To Currency</option>` + currencyListHtml);
 					  };
 
 						$("#output").text("Ready...");
 					};
 
 					request.onupgradeneeded = event => {
-					  var db = event.target.result;
+					  const db = event.target.result;
 					  objectStore = db.createObjectStore("Currencies", { keyPath: "id" });
 					  objectStore.createIndex("id", "id", { unique: true });
-
-
 					  objectStore.transaction.oncomplete = event => {
 					    const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
 					    for (let key in response.results) {
@@ -76,8 +73,8 @@ $(document).ready(() => {
 							    cursor.continue();
 							  }
 
-							$("#fromCurrency").append(currencyListHtml);
-							$("#toCurrency").append(currencyListHtml);
+							$("#from-currency").append(currencyListHtml);
+							$("#to-currency").append(currencyListHtml);
 
 						  };
 
@@ -95,17 +92,19 @@ $(document).ready(() => {
 
 
 	// Conversion process
-	$(document).on("click","#btn-convert", () => {	
-		const fromCurrency  = $('#fromCurrency').find(":selected").val();
-		const toCurrency    = $('#toCurrency').find(":selected").val();
+	document.querySelector("#convert").on("click", () => {	
+		const fc  = document.querySelector('#from-currency');
+		const fromCurrency = fc.options[fc.selectedIndex].value;
+		const tc = document.querySelector('#to-currency');
+		const toCurrency = tc.options[tc.selectedIndex].value;
 		const convertVal = fromCurrency + '_' + toCurrency;
-		const amount = parseFloat($('#amount').val());
+		const amount = parseFloat(document.querySelector('#amount').val());
 
-		if ((fromCurrency =="" && toCurrency =="") || amount < 0){
+		if ((fromCurrency == "" && toCurrency == "") || amount < 0){
 			alert("Oops, both Currency From and Currency To are required and Amount must be a positive number");
 		}
 		else{
-			$("#output").text("Converting...");
+			document.querySelector("#output").text("Converting...");
 			$.ajax({
 		        type: 'GET',
 		        url: `https://free.currencyconverterapi.com/api/v5/convert?q=${convertSymbol}&compact=y`,
@@ -115,13 +114,12 @@ $(document).ready(() => {
 		        	result = response[convertSymbol];
 		        	rate = parseFloat(result.val);
 		        	convertedAmount = amount * rate;
-		        	convertedMsg = `${amount} ${currencyFrom} = ${convertedAmount} ${currencyTo}`;
-		        	$("#output").text(convertedMsg);
+		        	document.querySelector("#output").text(convertedAmount);
 		        },
 		        complete: () => {				       
 		        },
 		        failure: function(){
-		             $("#output").text("Failed...");
+		             document.querySelector("#output").text("Sorry, try again later.");
 		        }
 		 	});
 	 }
