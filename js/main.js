@@ -92,19 +92,18 @@ document.ready(() => {
 
 
 	// Conversion process
-	document.querySelector("#convert").on("click", () => {	
-		const fc  = document.querySelector('#from-currency');
+	$("#convert").on("click", () => {	
+		const fc  = $('#from-currency');
 		const fromCurrency = fc.options[fc.selectedIndex].value;
-		const tc = document.querySelector('#to-currency');
+		const tc = $('#to-currency');
 		const toCurrency = tc.options[tc.selectedIndex].value;
 		const convertVal = fromCurrency + '_' + toCurrency;
-		const amount = parseFloat(document.querySelector('#amount').val());
+		const amount = parseFloat($('#amount').val());
 
 		if ((fromCurrency == "" && toCurrency == "") || amount < 0){
 			alert("Oops, both Currency From and Currency To are required and Amount must be a positive number");
 		}
 		else{
-			document.querySelector("#output").text("Converting...");
 			$.ajax({
 		        type: 'GET',
 		        url: `https://free.currencyconverterapi.com/api/v5/convert?q=${convertSymbol}&compact=y`,
@@ -114,12 +113,12 @@ document.ready(() => {
 		        	result = response[convertSymbol];
 		        	rate = parseFloat(result.val);
 		        	convertedAmount = amount * rate;
-		        	document.querySelector("#output").text(convertedAmount);
+		        	$("#output").text(convertedAmount);
 		        },
 		        complete: () => {				       
 		        },
 		        failure: function(){
-		             document.querySelector("#output").text("Sorry, try again later.");
+		            $("#output").text("Sorry, try again later.");
 		        }
 		 	});
 	 }
