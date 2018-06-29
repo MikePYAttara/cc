@@ -1,8 +1,9 @@
 const resources = [
-  '../css/bootstrap.min.css',
-  '../css/style.css',
-  './jquery.js',
-  './bootstrap.min.js',
+  '/',
+  '/css/bootstrap.min.css',
+  '/css/style.css',
+  '/js/jquery.js',
+  '/js/bootstrap.min.js',
   'https://free.currencyconverterapi.com/api/v5/currencies',        
 ]
 
