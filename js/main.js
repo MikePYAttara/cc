@@ -31,14 +31,14 @@ $(document).ready(() => {
 		        data: {},
 		        dataType: 'json', 
 		        success: response => {	
-					var request = window.indexedDB.open("AppDB", 1);
+					const request = window.indexedDB.open("AppDB", 1);
 					request.onerror = event => {
 							$("#output").text("Sorry, we hard a problem. Kindly refresh your browser.");
 					};
 					request.onsuccess = event => {
-					  var db = event.target.result;
-					  var currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
-					  var indexID = currencyObjectStore.index("id");
+					  const db = event.target.result;
+					  const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
+					  let indexID = currencyObjectStore.index("id");
 
 					  indexID.openCursor().onsuccess = event => {
 						  const cursor = event.target.result;

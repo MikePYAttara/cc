@@ -9,23 +9,24 @@ const resources = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open("appcache").then(cache => {
-      return cache.addAll(resources);
-    }).catch(err => console.log(err))
+    caches.open("appcache")
+    .then(cache => cache.addAll(resources))
+    .catch(err => console.log(err))
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {	
+    caches.match(event.request)
+    .then(cachedResponse => {	
     	if(!cachedResponse) {
-    		return fetch(event.request).then(onlineResponse => {
+        return fetch(event.request)
+        .then(onlineResponse => {
     			clonedOnlineResponse = onlineResponse.clone();
-	    		caches.open("appcache").then(cache => {	
-			      cache.put(event.request.url, clonedOnlineResponse);
-			    });
+          caches.open("appcache")
+          .then(cache => cache.put(event.request.url, clonedOnlineResponse));
     			return onlineResponse;
-    		}).catch(err => {
+        }).catch(err => {
     			console.log(err);
     		});
     	}
