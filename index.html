@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="manifest" href="manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="util/ms-icon-144x144.png">
@@ -14,21 +15,37 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container card">
+
+        <!-- HEADER -->
         <header class="header">
             <h1 class="title">
                 MPY Currency Converter
             </h1>
         </header>
-        <section class="container main-area">
+
+        <!-- MAIN AREA -->
+        <section class="main-area">
+
+            <!-- Currency Lists -->
             <div class="currency-group input-group">
-                <select name="fromCurrency" id="fromCurrency" class="currency-list"></select>
-                <select name="toCurrency" id="toCurrency" class="currency-list"></select>
+                <select name="from-urrency" id="from-currency" class="currency-list"></select>
+                <select name="to-currency" id="to-currency" class="currency-list"></select>
             </div>
+
+            <!-- Input Field -->
             <input type="text" class="amount" id="amount">
-            <div class="output" id="output"></div>
+
+            <!-- Output Area -->
+            <div class="output-area">
+                <p id="output"></p>
+            </div>
+
+            <!-- Convert Button -->
             <input type="button" value="convert" class="btn btn-primary">
         </section>
+
+        <!-- FOOTER -->
         <footer class="footer">
             <p class="footer-text">
                 This project was developed by <a href="http://mikeattara.com">Mike Perry Y Attara</a> for the Google Africa Challenge Scholarship. 
@@ -36,6 +53,9 @@
             </p>
         </footer>
     </div>
-    
+
+    <!-- Js scripts -->
+    <script src="js/jquery.js"></script> 
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

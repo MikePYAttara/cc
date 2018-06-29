@@ -1,8 +1,7 @@
-import './jquery'
-
 $(document).ready(() => {
 	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('/sw.js').then(reg => { 
+		navigator.serviceWorker.register('/sw.js')
+		.then(reg => { 
 			if (reg.waiting) {
 				self.skipWaiting();  	
 		      return;
@@ -23,7 +22,7 @@ $(document).ready(() => {
 	loadCurrenciesOnline();
 
 	// Populating the select controls
-	function loadCurrenciesOnline(){
+	function loadCurrenciesOnline() {
 		$("#output").text("Loading currencies...");
 		$.ajax({
 		        type: 'GET',
