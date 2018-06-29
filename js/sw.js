@@ -1,14 +1,16 @@
+const resources = [
+  '../css/bootstrap.min.css',
+  '../css/style.css',
+  './jquery.js',
+  './bootstrap.min.js',
+  'https://free.currencyconverterapi.com/api/v5/currencies',        
+]
+
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open("appcache").then(cache => {
-      return cache.addAll([
-      	'/',
-        '../css/bootstrap.min.css',
-        '../css/style.css',
-        '../js/jquery.js',
-        '../js/bootstrap.min.js',
-        'https://free.currencyconverterapi.com/api/v5/currencies',        
-      ]);
+      return cache.addAll(resources);
     }).catch(err => console.log(err))
   );
 });
