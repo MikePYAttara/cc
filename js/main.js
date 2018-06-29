@@ -69,7 +69,7 @@ $(document).ready(() => {
 							  let cursor = event.target.result;
 							  if (cursor) {
 							    objRecord = cursor.value;
-							    currencyListHtml += `<option value=${objRecord.id} class="dropdown-item"> [${objRecord.id}] ${objRecord.currencyName} </option>`;
+							    currencyListHtml += `<option value=${objRecord.id}> [${objRecord.id}] ${objRecord.currencyName} </option>`;
 							    cursor.continue();
 							  }
 
