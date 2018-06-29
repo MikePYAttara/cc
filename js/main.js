@@ -69,7 +69,7 @@ $(document).ready(() => {
 							  let cursor = event.target.result;
 							  if (cursor) {
 							    objRecord = cursor.value;
-							    currencyListHtml += `<option value=${objRecord.id}> [${objRecord.id}] ${objRecord.currencyName} </option>`;
+							    currencyListHtml += `<option value=${objRecord.id} class="dropdown-item"> [${objRecord.id}] ${objRecord.currencyName} </option>`;
 							    cursor.continue();
 							  }
 
@@ -92,7 +92,7 @@ $(document).ready(() => {
 
 
 	// Conversion process
-	$("#convert").on("click", () => {	
+	$(document).on("click","#btn-convert", () => {	
 		const fc  = $('#from-currency');
 		const fromCurrency = fc.options[fc.selectedIndex].value;
 		const tc = $('#to-currency');
@@ -113,7 +113,7 @@ $(document).ready(() => {
 		        	result = response[convertSymbol];
 		        	rate = parseFloat(result.val);
 		        	convertedAmount = amount * rate;
-		        	$("#output").text(convertedAmount);
+		        	$("#output").text(`${convertedAmount}`);
 		        },
 		        complete: () => {				       
 		        },
