@@ -34,7 +34,9 @@ self.addEventListener('install', event => {
               store.put(data, data.id);
           };
       }
-    }) 
+    });
+    
+    caches.open('appcache').then(cache => cache.addAll(resources));
 })
 
 
