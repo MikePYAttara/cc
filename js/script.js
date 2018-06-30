@@ -23,7 +23,22 @@ if ('serviceWorker' in navigator) {
   })
 };         
 
+let currencyInnerHTML = "";
+const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
+fetch(url)
+.then(res => res.json())
+.then(res => {
+  const currencies = res.results;
+  for (let currency in currencies) {
+    currencyInnerHTML += `<option value=${currency.id}>${currency.id}</option>`
+  };
+  document.querySelector('#from-currency').innerHTML =`<option value="">Select Currency</option>` + currencyInnerHTML;
+  document.querySelector('#to-currency').innerHTML =`<option value="">Select Currency</option>` + currencyInnerHTML;
+})
+
+// Select button
 document.querySelector('#convert').on('click', convertCurrency());
+
 // Conversion process
 function convertCurrency() {
   const fc = document.querySelector('#from-currency');

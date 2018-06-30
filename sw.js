@@ -2,10 +2,6 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
 
-function openDataBase() {
-  window.indexedDB.open('mpy-cc', 1);
-} 
-
 const resources = [
   '/',
   '/css/style.css',
@@ -13,11 +9,32 @@ const resources = [
   'https://free.currencyconverterapi.com/api/v5/currencies',        
 ]
 
+const dbName = 'mpy-cc'
+
 self.addEventListener('install', event => {
+  // Open Database
+  const request = window.indexedDB.open(dbName, 1);
   event.waitUntil(
-    caches.open("appcache")
-    .then(cache => cache.addAll(resources))
-    .catch(err => console.log(err))
+    // On success add data
+    db.onsuccess = event => {
+      // Query for data
+      const query = event.target.result;
+
+      // Check if data exist in Database
+      const currency = query.transaction('currencies').objectStore('currencies').get(data.symbol);
+
+      currency.onsuccess = event => {
+          const dbData = event.target.result;
+          const store = query.transaction('currencies', 'readwrite').objectStore('currencies');
+          if (!dbData) {
+              // Save data
+              store.add(data, data.symbol);
+          } else {
+              //Update data
+              store.put(data, data.symbol);
+          };
+      }
+  } 
   );
 });
 
