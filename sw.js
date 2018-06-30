@@ -34,9 +34,9 @@ self.addEventListener('install', event => {
               store.put(data, data.id);
           };
       }
-    };) 
-  );
-});
+    }) 
+})
+
 
 self.addEventListener('fetch', event => {
   event.respondWith(
