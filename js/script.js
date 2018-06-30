@@ -1,25 +1,23 @@
 if ('serviceWorker' in navigator) {
-    self.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-      .then(reg => {
-        // Registration successful
-        console.log('Service Worker registered!')
-        if (reg.waiting) {
-          self.skipWaiting();  	
-            return;
-          }
-  
-          if (reg.installing) {
-            return;}
-        
-          if (reg.active) {
-            return;
-          }
+  navigator.serviceWorker.register('/sw.js')
+  .then(reg => {
+    // Registration successful
+    console.log('Service Worker registered!')
+    if (reg.waiting) {
+      self.skipWaiting();  	
+        return;
+      }
 
-      }, err => {
-        // Registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-      });
+      if (reg.installing) {
+        return;}
+    
+      if (reg.active) {
+        return;
+      }
+
+  }, err => {
+    // Registration failed :(
+    console.log('ServiceWorker registration failed: ', err);
   });
 };         
 
