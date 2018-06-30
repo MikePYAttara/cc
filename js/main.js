@@ -98,7 +98,7 @@ $(document).ready(() => {
 		const tc = $('#to-currency');
 		const toCurrency = tc.options[tc.selectedIndex].value;
 		const convertVal = fromCurrency + '_' + toCurrency;
-		const amount = parseFloat($('#amount').val());
+		const amount = parseFloat($('#amount').value);
 
 		if ((fromCurrency == "" && toCurrency == "") || amount < 0){
 			alert("Oops, both Currency From and Currency To are required and Amount must be a positive number");
