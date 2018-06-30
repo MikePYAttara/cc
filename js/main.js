@@ -20,10 +20,10 @@ $(document).ready(() => {
 
 
 	let currencyListHtml = "";
-	loadCurrenciesOnline();
+	loadCurrencies();
 
 	// Populate select
-	function loadCurrenciesOnline() {
+	function loadCurrencies() {
 		$.ajax({
 		        type: 'GET',
 		        url: "https://free.currencyconverterapi.com/api/v5/currencies",
@@ -94,7 +94,7 @@ $(document).ready(() => {
 
 
 	// Conversion process
-	$(document).on("click","#btn-convert", () => {	
+	$(document).on("click","#convert", () => {	
 		const fc  = $('#from-currency');
 		const fromCurrency = fc.options[fc.selectedIndex].value;
 		const tc = $('#to-currency');

@@ -2,11 +2,11 @@ const resources = [
   '/',
   '/css/bootstrap.min.css',
   '/css/style.css',
+  '/css/manifest/*',
   '/js/jquery.js',
   '/js/bootstrap.min.js',
   'https://free.currencyconverterapi.com/api/v5/currencies',        
 ]
-
 
 self.addEventListener('install', event => {
   event.waitUntil(
