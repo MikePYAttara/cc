@@ -41,7 +41,6 @@ document.querySelector('#convert').addEventListener('click', convertCurrency);
 
 // Conversion process
 function convertCurrency() {
-  console.log('convertCurrency() called')
   const fc = document.querySelector('#from-currency');
   const tc = document.querySelector('#to-currency');
   const fromCurrency = fc.options[fc.selectedIndex].value;
@@ -56,8 +55,7 @@ function convertCurrency() {
     if (val) {
       let total = parseFloat(val) * amt;
       total = Math.round(total * 100) / 100;
-      // document.querySelector('#output').innerHTML = total;
-      console.log(total);
+      document.querySelector('#output').innerHTML = total;
     }
   })
   .catch(err => console.log(err))
