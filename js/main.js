@@ -1,3 +1,4 @@
+// Register serviceWorker
 $(document).ready(() => {
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register('/sw.js')
@@ -21,7 +22,7 @@ $(document).ready(() => {
 	let currencyListHtml = "";
 	loadCurrenciesOnline();
 
-	// Populating the select controls
+	// Populate select
 	function loadCurrenciesOnline() {
 		$.ajax({
 		        type: 'GET',
@@ -82,7 +83,8 @@ $(document).ready(() => {
 					  };
 					}
 		        },
-		        complete: () => {				       
+		        complete: () => {	
+					return			       
 		        },
 		        failure: () => {
 		             $("#output").text("A problem occured, refresh browser...");
@@ -115,7 +117,8 @@ $(document).ready(() => {
 		        	convertedAmount = amount * rate;
 		        	$("#output").text(`${convertedAmount}`);
 		        },
-		        complete: () => {				       
+		        complete: () => {	
+					return			       
 		        },
 		        failure: function(){
 		            $("#output").text("Sorry, try again later.");
