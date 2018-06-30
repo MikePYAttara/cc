@@ -34,7 +34,7 @@ self.addEventListener('install', event => {
               store.put(data, data.id);
           };
       }
-    }; 
+    };) 
   );
 });
 
