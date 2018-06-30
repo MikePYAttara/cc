@@ -1,10 +1,10 @@
 const resources = [
   '/',
-  '/css/bootstrap.min.css',
+  '/manifest.json',
+  '/browserconfig.xml',
   '/css/style.css',
-  '/css/manifest/*',
-  '/js/jquery.js',
-  '/js/bootstrap.min.js',
+  '/css/manifest/',
+  '/js/script.js',
   'https://free.currencyconverterapi.com/api/v5/currencies',        
 ]
 
