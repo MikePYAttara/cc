@@ -1,3 +1,8 @@
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
+
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/cc/sw.js', { scope: '/cc/'})
   .then(reg => {
@@ -26,12 +31,12 @@ const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 fetch(url)
 .then(res => res.json())
 .then(data => {
-  const currencies = data.results;
+  const currencies = data['results'];
   for (let currency in currencies) {
     currencyInnerHTML += `<option value=${currency}>${currency}</option>`;
   };
-  document.querySelector('#from-currency').innerHTML =`<option value="">Select Currency</option>` + currencyInnerHTML;
-  document.querySelector('#to-currency').innerHTML =`<option value="">Select Currency</option>` + currencyInnerHTML;
+  document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyInnerHTML;
+  document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyInnerHTML;
 })
 
 // Select button
@@ -57,4 +62,29 @@ function convertCurrency() {
     }
   })
   .catch(err => console.log(err))
+}
+
+
+function createDb(data) {
+  // create database
+  const req = window.indexedDB.open('MPY-CC');
+  req.onerror = event => {
+    alert(`Database error: ${event.target.errorCode}`)
+  }
+
+  req.onupgradeneeded = event => {
+    const db = event.target.result;
+    const objStore = db.createObjectStore('currencies', { keyPath : 'id' });
+    objStore.createIndex('symbol', { unique : false });
+    objStore.createIndex('id', { unique : true });
+    const currencies = data['results']
+    objStore.transaction.complete = event => {
+      
+    }
+
+  }
+
+  req.onsuccess = event => {
+    const db = event.target.result;
+  }
 }
