@@ -25,35 +25,26 @@
             <!-- MAIN AREA -->
             <section class="main-area">
     
-                <!-- Currency Lists -->
-                <div class="currency-group">
-                        <!-- From Currency -->
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">From</div>
-                            </div> 
-                            <select name="from-urrency" id="from-currency" class="currency-list btn"></select>
-                        </div>
-    
-                        <!-- To Currency -->
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">To  </div>
-                            </div> 
-                            <select name="to-urrency" id="to-currency" class="currency-list btn"></select>
-                        </div>
+                <!-- Input Area -->
+                <div class="input-group">
+                   <input type="text" class="amount" id="amount" placeholder="0">
+                   <select name="from-currency" id="from-currency" class="currency-list"></select>
+                   <div class="to-text">To</div>
+                   <select name="to-currency" id="to-currency" class="currency-list"></select>
                 </div>
-    
-                <!-- Input Field -->
-                <input type="text" class="amount" id="amount">
-    
+                
                 <!-- Output Area -->
-                <div class="output-area">
-                    <p id="output"></p>
+                <!-- 
+                    THIS AREA WILL BE GENERATED USING JAVASCRIPT
+                    <div class="output-area">
+                    <div id="output">
+                        CONVERTED VALUE
+                    </div>
                 </div>
+                -->
     
                 <!-- Convert Button -->
-                <input type="button" value="convert" class="btn btn-primary" id="convert">
+                <input type="button" value="convert" class="btn" id="convert">
             </section>
     
             <!-- FOOTER -->

@@ -3,15 +3,12 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
 
 function openDataBase() {
-  window.indexedDB.open('mpy-ccDB', 1);
+  window.indexedDB.open('mpy-cc', 1);
 } 
 
 const resources = [
   '/',
-  '/manifest.json',
-  '/browserconfig.xml',
   '/css/style.css',
-  '/css/manifest/',
   '/js/script.js',
   'https://free.currencyconverterapi.com/api/v5/currencies',        
 ]
