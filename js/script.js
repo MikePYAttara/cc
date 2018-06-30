@@ -1,6 +1,6 @@
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+    self.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
       .then(reg => {
         // Registration successful
         console.log('Service Worker registered!')
@@ -20,7 +20,7 @@ if ('serviceWorker' in navigator) {
         // Registration failed :(
         console.log('ServiceWorker registration failed: ', err);
       });
-  })
+  });
 };         
 
 let currencyInnerHTML = "";
