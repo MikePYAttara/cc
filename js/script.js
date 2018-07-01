@@ -107,6 +107,8 @@ function createDb(resp) {
               const currency = cursor.value;
               // build currencyListHtml
               currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
+
+              cursor.continue();
             };
           };
         };
