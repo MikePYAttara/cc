@@ -1,6 +1,8 @@
+// GLOBAL VARIABLES 
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
+let currencyListHtml = "";
+const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
 // REGISTER SERVICE WORKER
 if ('serviceWorker' in navigator) {
@@ -27,15 +29,6 @@ if ('serviceWorker' in navigator) {
 };         
 
 // POPULATE CURRENCY LIST
-let currencyListHtml = "";
-const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
-
-// fetch(url).then(res => res.json())
-// .then(json => {
-//   console.log(json);
-//   createDb(json);
-// })
-
 if (self.XMLHttpRequest) {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = () => {
@@ -49,6 +42,12 @@ if (self.XMLHttpRequest) {
   xhttp.open('GET', url, true);
   xhttp.send();
 };
+
+// fetch(url).then(res => res.json())
+// .then(json => {
+//   console.log(json);
+//   createDb(json);
+// })
 
 
 
