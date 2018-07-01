@@ -74,10 +74,19 @@ function createDb(data) {
     objectStore.createIndex("id", "id", { unique: true });
     objectStore.transaction.complete = event => {
       const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
-      for( let currency in data['results']) {
-        currencyObjectStore.add(currency);
-        // build currencyListHtml
-        currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+      for (let currency in data['results']) {
+        currencyObjectStore.openCursor().onsuccess = event => {
+          const cursor = event.target.result;
+          if (cursor) {
+            currencyObjectStore.add(currency);
+            // build currencyListHtml
+            currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+            cursor.continue();
+          }
+          else {
+            alert("No more entries!");
+          }
+        }
       }
         
       // populate currency list
@@ -88,3 +97,4 @@ function createDb(data) {
 
   req.onsuccess = event => db = event.target.result;
 }
+
