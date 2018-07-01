@@ -65,9 +65,8 @@ function convertCurrency() {
 
 // FUNCTION TO CREATE DATABASE
 function createDb(json) {
-  console.log(json);
   // create database
-  const req = window.indexedDB.open('MPY-CC', 1);
+  const req = window.indexedDB.open('MPY-CC', 2);
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}`)
   }
@@ -79,7 +78,6 @@ function createDb(json) {
     
     indexID.openCursor().onsuccess = event => {
       const cursor = event.target.result;
-      console.log(cursor);
       if (cursor) {
         currencyRecord = cursor.value;
 
