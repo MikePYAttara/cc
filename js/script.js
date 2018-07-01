@@ -73,7 +73,7 @@ function createDb(data) {
 
   req.onsuccess = event => {// db = event.target.result;
     const db = event.target.result;
-		const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
+		const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
     const indexID = currencyObjectStore.index("id");
     
     indexID.openCursor().onsuccess = event => {
