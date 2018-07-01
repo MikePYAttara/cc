@@ -4,7 +4,7 @@ window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || 
 
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/cc/sw.js', { scope: '/cc/'})
+  navigator.serviceWorker.register('/cc/sw.js', { scope : '/cc/'})
   .then(reg => {
     // Registration successful
     console.log('Service Worker registered!')
@@ -26,17 +26,12 @@ if ('serviceWorker' in navigator) {
   });
 };         
 
-let currencyInnerHTML = "";
+let currencyListHTML = "";
 const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 fetch(url)
 .then(res => res.json())
 .then(data => {
-  const currencies = data['results'];
-  for (let currency in currencies) {
-    currencyInnerHTML += `<option value=${currency}>${currency}</option>`;
-  };
-  document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyInnerHTML;
-  document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyInnerHTML;
+  createDb(data);
 })
 
 // Select button
@@ -74,17 +69,20 @@ function createDb(data) {
 
   req.onupgradeneeded = event => {
     const db = event.target.result;
-    const objStore = db.createObjectStore('currencies', { keyPath : 'id' });
-    objStore.createIndex('symbol', { unique : false });
-    objStore.createIndex('id', { unique : true });
-    const currencies = data['results']
-    objStore.transaction.complete = event => {
-      
+    const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
+    const indexID = currencyObjectStore.index("id");
+    indexID.openCursor().onsuccess = event => {
+      const cursor = event.target.result;
+      if (cursor) {
+        objRecord = cursor.value;
+        // build currencyListHtml
+        currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+        cursor.continue();
+      }
+
+      document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+      document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+
     }
-
-  }
-
-  req.onsuccess = event => {
-    const db = event.target.result;
   }
 }

@@ -7,8 +7,7 @@ const resources = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open('mpy-cc-cache')
-    .then(cache => cache.addAll(resources))
+    caches.open('mpy-cc-cache').then(cache => cache.addAll(resources))
     .catch(err => console.log(err))
   )
 })
@@ -16,20 +15,17 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-    .then(cachedResponse => {	
-    	if(!cachedResponse) {
-        return fetch(event.request)
-        .then(onlineResponse => {
-    			clonedOnlineResponse = onlineResponse.clone();
-          caches.open("appcache")
-          .then(cache => cache.put(event.request.url, clonedOnlineResponse));
-    			return onlineResponse;
-        }).catch(err => {
-    			console.log(err);
-    		});
-    	}
-      return cachedResponse;
+    caches.match(event.request).then(resp => {
+      return resp || fetch(event.request).then(response => {
+        let responseClone = response.clone();
+        caches.open('mpy-cc-cache').then(cache => {
+          cache.put(event.request, responseClone);
+        });
+
+        return response;
+      });
+    }).catch(err => {
+      return err;
     })
   );
 });
