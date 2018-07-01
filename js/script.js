@@ -98,7 +98,7 @@ function createDb(json) {
       const currencyObjectStore = db.transaction(['currencies'], 'readwrite').objectStore('currencies');
       for (currency in currencies) {
         // add currency to db 
-        const request = currencyObjectStore.add(currency[0]);
+        const request = currencyObjectStore.add(currency[id].id);
 
         request.onsuccess = event => {
           // event.target.result === currency.id
