@@ -100,9 +100,15 @@ function createDb(resp) {
 
         request.onsuccess = event => {
           // event.target.result === currency.id
-          const currency = event.target.result;
-          // build currencyListHtml
-          currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
+          const index = currencyObjectStore.index('id');
+          index.openCursor().onsuccess = event => {
+            const cursor = event.target.result;
+            if (cursor) {
+              const currency = cursor.value;
+              // build currencyListHtml
+              currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
+            };
+          };
         };
       };
     };
