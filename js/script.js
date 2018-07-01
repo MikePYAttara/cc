@@ -113,7 +113,7 @@ function createDb(resp) {
       if (cursor) {
         const currency = cursor.value;
         // populate currency list
-        document.querySelector('#from-currency').appendChild(`<option value="${currency.id}">${currency.id}</option>`);document.querySelector('#to-currency').appendChild(`<option value="${currency.id}">${currency.id}</option>`);
+        document.querySelector('#from-currency').innerHTML += `<option value="${currency.id}">${currency.id}</option>`;document.querySelector('#to-currency').innerHTML += `<option value="${currency.id}">${currency.id}</option>`;
 
         cursor.continue();
       } else {
