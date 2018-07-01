@@ -85,7 +85,7 @@ function createDb(json) {
   const currencies = json['results'];
 
   // create database
-  const req = window.indexedDB.open('MPY-CC', 2);
+  const req = window.indexedDB.open('MPY-CC', 3);
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}`)
   }
