@@ -81,7 +81,7 @@ function createDb(resp) {
   // create database
   const req = window.indexedDB.open('MPY-CC', 3);
   req.onerror = event => {
-    alert(`Database error: ${event.target.errorCode}`)
+    alert(`Database error: ${event.target.errorCode}. Kindly refresh your browser.`)
   }
 
   req.onupgradeneeded = event => {
