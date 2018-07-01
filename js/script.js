@@ -67,7 +67,7 @@ function createDb(data) {
     alert(`Database error: ${event.target.errorCode}`)
   }
 
-  req.onupgradeneeded = event => {
+  req.onsuccess = event => {
     const db = event.target.result;
     const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
     const indexID = currencyObjectStore.index("id");
