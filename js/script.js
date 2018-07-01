@@ -29,10 +29,27 @@ if ('serviceWorker' in navigator) {
 // POPULATE CURRENCY LIST
 let currencyListHTML = "";
 const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
-fetch(url)
-.then(data => {
-  createDb(data);
-})
+
+// fetch(url).then(res => res.json())
+// .then(json => {
+//   console.log(json);
+//   createDb(json);
+// })
+
+if (self.XMLHttpRequest) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = () => {
+    if (this.readyState === 4 && this.status === 200) {
+      const res = xhttp.responseText;
+      currencies = JSON.parse(res);
+      createDb(currencies);
+    };
+  };
+  
+  xhttp.open('GET', url, true);
+  xhttp.send();
+};
+
 
 
 // PERFORM CONVERSION
