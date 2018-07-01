@@ -1,5 +1,6 @@
 const resources = [
   '/',
+  '/index.html',
   '/css/style.css',
   '/js/script.js',
   'https://free.currencyconverterapi.com/api/v5/currencies',        
