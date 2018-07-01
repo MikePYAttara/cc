@@ -64,7 +64,8 @@ function convertCurrency() {
 
 
 // FUNCTION TO CREATE DATABASE
-function createDb(data) {
+function createDb(json) {
+  console.log(json);
   // create database
   const req = window.indexedDB.open('MPY-CC', 1);
   req.onerror = event => {
@@ -101,8 +102,8 @@ function createDb(data) {
       const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
 
       // add individual currencies to object store
-      for (var currency in data.results) {
-        currencyRecord = data.results[currency];
+      for (var currency in json['results']) {
+        currencyRecord = json['results'][currency];
         currencyObjectStore.add(currencyRecord);
       }
       const indexID = currencyObjectStore.index("id");
