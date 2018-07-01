@@ -13,49 +13,34 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 </head>
 <body>
-    <div class="container card">
-         <!-- HEADER -->
-         <header class="header">
-                <h1 class="title">
-                    MPY Currency Converter
-                </h1>
-            </header>
-    
-            <!-- MAIN AREA -->
-            <section class="main-area">
-    
-                <!-- Input Area -->
-                <div class="input-group">
-                   <input type="text" class="amount" id="amount" placeholder="0">
-                   <select name="from-currency" id="from-currency" class="currency-list">
-                       <option value="">Currency</option>
-                   </select>
-                   <div class="to-text">To</div>
-                   <select name="to-currency" id="to-currency" class="currency-list">
-                        <option value="">Currency</option>
-                   </select>
-                </div>
-                
-                <!-- Output Area -->
-                <div class="output-area">
-                    <p class="output-text" id="output">
-                        <!-- Content from conversion -->
-                    </p>
-                </div>
-               
-    
-                <!-- Convert Button -->
-                <input type="button" value="convert" class="btn" id="convert">
-            </section>
-    
-            <!-- FOOTER -->
-            <footer class="footer">
-                <p class="footer-text">
-                    This project was developed by <a href="http://mikeattara.com">Mike Perry Y Attara</a> for the Google Africa Challenge Scholarship. 
-                    <span class="hashtags">#ALCwithGoogle #GoogleUdacityScholars #GoogleAfrica</span>
-                </p>
-            </footer> 
-    </div>
+  <div class="container">
+      <header>MPY Currency Converter</header>
+      <main>
+          <!-- Input Area -->
+          <div class="input-group">
+              <input type="text" class="amount" id="amount" placeholder="0">
+              <div class="to-text">from</div>
+              <select name="from-currency" id="from-currency" class="currency-list">
+                  <option value="">Currency</option>
+              </select>
+              <div class="to-text">To</div>
+              <select name="to-currency" id="to-currency" class="currency-list">
+                  <option value="">Currency</option>
+              </select>
+          </div>
+
+          <!-- Output Area -->
+          <div class="output-area">
+              <p class="output-text" id="output">
+                  <!-- Content from conversion -->
+              </p>
+          </div>
+          <!-- Convert Button -->
+          <input type="button" value="convert" class="btn" id="convert">
+      </main>
+      <footer>Copyright &copy;2018 | Mike Perry Y Attara<span class="hashtags">#ALCwithGoogle #GoogleUdacityScholars #GoogleAfrica</span>
+      </footer>
+  </div>
 
     <!-- Js scripts -->
     <script src="js/script.js"></script>
