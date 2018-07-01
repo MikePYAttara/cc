@@ -69,7 +69,7 @@ function createDb(data) {
 
   req.onupgradeneeded = event => {
     const db = event.target.result;
-    const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
+    const currencyObjectStore = db.createObjectStore("currencies", { keyPath: "id" });
     const indexID = currencyObjectStore.index("id");
     indexID.openCursor().onsuccess = event => {
       const cursor = event.target.result;
@@ -88,7 +88,7 @@ function createDb(data) {
 
   req.onsuccess = event => {
     const db = event.target.result;
-    const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
+    const currencyObjectStore = db.createObjectStore("Currencies", { keyPath : 'id' });
     const indexID = currencyObjectStore.index("id");
     indexID.openCursor().onsuccess = event => {
       const cursor = event.target.result;
