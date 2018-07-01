@@ -27,7 +27,7 @@ if ('serviceWorker' in navigator) {
 };         
 
 // POPULATE CURRENCY LIST
-let currencyListHTML = "";
+let currencyListHtml = "";
 const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
 // fetch(url).then(res => res.json())
@@ -83,78 +83,38 @@ function convertCurrency() {
 function createDb(json) {
   // store currencies
   const currencies = json['results'];
-  console.log(currencies);
+
   // create database
-  const req = window.indexedDB.open('MPY-CC', 2);
+  const req = window.indexedDB.open('MPY-CC');
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}`)
   }
 
-  req.onsuccess = event => {// db = event.target.result;
+  req.onupgradeneeded = event => {
     const db = event.target.result;
-		const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
-    const indexID = currencyObjectStore.index("id");
+		const objectStore = db.createObjectStore('currencies', { keyPath : 'id' });
+    objectStore.createIndex('id', 'id', { unique : true });
+    objectStore.transaction.oncomplete = event => {
+      const currencyObjectStore = db.transaction(['currencies'], 'readwrite').objectStore('currencies');
+      currencies.forEach(currency => {
+        // add currency to db 
+        const request = currencyObjectStore.add(currency);
 
-    // store currencies in database
-    for (let currency in currencies){
-      currencyObjectStore.add(currency);
-    };
-    
-    indexID.openCursor().onsuccess = event => {
-      const cursor = event.target.result;
-      if (cursor) {
-        currencyRecord = cursor.value;
-
-        // build currencyListHtml
-        currencyListHtml += `<option value=${currencyRecord.id}>${currencyRecord.id}</option>`;
-
-        cursor.continue();
-      };
-      // populate currency list
-      document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
-      document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+        request.onsuccess = event => {
+          // event.target.result === currency.id
+          const currency = event.target.result;
+          // build currencyListHtml
+          currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
+        };
+      });
     };
   };
 
-  req.onupgradeneeded = event => {
-    db = event.target.result;
-    const objectStore = db.createObjectStore("currencies", { keyPath: "id" });
-    objectStore.createIndex("id", "id", { unique: true });
-    objectStore.transaction.complete = event => {
-      const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
-
-      // add individual currencies to object store
-      for (var currency in currencies) {
-        currencyRecord = currencies[currency];
-        currencyObjectStore.add(currencyRecord);
-      }
-      const indexID = currencyObjectStore.index("id");
-			indexID.openCursor().onsuccess = event => {
-        const cursor = event.target.result;
-        console.log(cursor);
-        if (cursor) {
-          currencyRecord = cursor.value;
-
-          // build currencyListHtml
-          currencyListHtml += `<option value=${currencyRecord.id}>${currencyRecord.id}</option>`;
-
-          cursor.continue();
-        };
-			};
-      currencyObjectStore.openCursor().onsuccess = event => {
-        const cursor = currencies;
-        if (cursor) {
-          currencyObjectStore.add(currency);
-
-          // build currencyListHtml
-          currencyListHtml += `<option value=${currencyRecord.id}>${currencyRecord.id}</option>`;
-
-          cursor.continue();
-        }
-        // populate currency list
-        document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
-        document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
-      };
-    };
+  req.onsuccess = event => {
+    const db = event.target.result;
   };
 }
+
+// populate currency list
+document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>${currencyListHtml}`;
+document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>${currencyListHtml}`;
