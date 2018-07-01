@@ -2,8 +2,6 @@
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
 
-const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
-
 // REGISTER SERVICE WORKER
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/cc/sw.js', { scope : '/cc/'})
@@ -39,7 +37,7 @@ if (self.XMLHttpRequest) {
     };
   };
   
-  xhttp.open('GET', url, true);
+  xhttp.open('GET', 'https://free.currencyconverterapi.com/api/v5/currencies', true);
   xhttp.send();
 };
 
@@ -99,7 +97,7 @@ function createDb(resp) {
 
         request.onsuccess = event => {
           // event.target.result === currency.id
-          return event;
+          console.log(event);
         };
       };
     };
