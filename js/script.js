@@ -65,6 +65,8 @@ function convertCurrency() {
 
 // FUNCTION TO CREATE DATABASE
 function createDb(json) {
+  // store currencies
+  const currencies = json['results'];
   // create database
   const req = window.indexedDB.open('MPY-CC', 2);
   req.onerror = event => {
@@ -75,6 +77,11 @@ function createDb(json) {
     const db = event.target.result;
 		const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
     const indexID = currencyObjectStore.index("id");
+
+    // store currencies in database
+    for (let currency in currencies){
+      currencyObjectStore.add(currency);
+    };
     
     indexID.openCursor().onsuccess = event => {
       const cursor = event.target.result;
@@ -100,8 +107,8 @@ function createDb(json) {
       const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
 
       // add individual currencies to object store
-      for (var currency in json['results']) {
-        currencyRecord = json['results'][currency];
+      for (var currency in currencies) {
+        currencyRecord = currencies[currency];
         currencyObjectStore.add(currencyRecord);
       }
       const indexID = currencyObjectStore.index("id");
@@ -118,12 +125,12 @@ function createDb(json) {
         };
 			};
       currencyObjectStore.openCursor().onsuccess = event => {
-        const cursor = data['results'];
+        const cursor = currencies;
         if (cursor) {
           currencyObjectStore.add(currency);
 
           // build currencyListHtml
-          currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+          currencyListHtml += `<option value=${currencyRecord.id}>${currencyRecord.id}</option>`;
 
           cursor.continue();
         }
