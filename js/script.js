@@ -2,7 +2,7 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
 
-
+// REGISTER SERVICE WORKER
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/cc/sw.js', { scope : '/cc/'})
   .then(reg => {
@@ -26,6 +26,7 @@ if ('serviceWorker' in navigator) {
   });
 };         
 
+// POPULATE CURRENCY LIST
 let currencyListHTML = "";
 const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 fetch(url)
@@ -34,6 +35,8 @@ fetch(url)
   createDb(data);
 })
 
+
+// PERFORM CONVERSION
 // Select button
 document.querySelector('#convert').addEventListener('click', convertCurrency);
 
@@ -60,6 +63,7 @@ function convertCurrency() {
 }
 
 
+// FUNCTION TO CREATE DATABASE
 function createDb(data) {
   // create database
   const req = window.indexedDB.open('MPY-CC', 1);
@@ -119,7 +123,7 @@ function createDb(data) {
 
           // build currencyListHtml
           currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
-          
+
           cursor.continue();
         }
         // populate currency list
