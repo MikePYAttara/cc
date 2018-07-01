@@ -88,8 +88,7 @@ function createDb(data) {
 
   req.onupgradeneeded = event => {
     const db = event.target.result;
-    const indexID = currencyObjectStore.index("id");
-    indexID.openCursor().onsuccess = event => {
+    db.openCursor().onsuccess = event => {
       const cursor = event.target.result;
       if (cursor) {
         objRecord = cursor.value;
