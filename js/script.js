@@ -30,7 +30,6 @@ if ('serviceWorker' in navigator) {
 let currencyListHTML = "";
 const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 fetch(url)
-.then(res => res.json())
 .then(data => {
   createDb(data);
 })
