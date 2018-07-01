@@ -109,6 +109,8 @@ function createDb(resp) {
               currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
 
               cursor.continue();
+            } else {
+              console.log('All currencies loaded!');
             };
           };
         };
