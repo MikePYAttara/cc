@@ -97,7 +97,6 @@ function createDb(resp) {
 
         request.onsuccess = event => {
           // event.target.result === currency.id
-          console.log(event);
         };
       };
     };
