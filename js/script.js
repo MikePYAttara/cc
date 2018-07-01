@@ -1,7 +1,7 @@
 // GLOBAL VARIABLES 
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
-let currencyListHtml = "";
+
 const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 
 // REGISTER SERVICE WORKER
@@ -78,7 +78,7 @@ function convertCurrency() {
 }
 
 
-// FUNCTION TO CREATE DATABASE
+// CREATE DATABASE
 function createDb(resp) {
   // create database
   const req = window.indexedDB.open('MPY-CC', 3);
@@ -99,20 +99,7 @@ function createDb(resp) {
 
         request.onsuccess = event => {
           // event.target.result === currency.id
-          const index = currencyObjectStore.index('id');
-          index.openCursor().onsuccess = event => {
-            const cursor = event.target.result;
-            if (cursor) {
-              const currency = cursor.value;
-              // build currencyListHtml
-              currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
-              console.log('onupdateneeded', currency.id);
-
-              cursor.continue();
-            } else {
-              console.log('All currencies loaded!');
-            };
-          };
+          return event;
         };
       };
     };
@@ -122,12 +109,11 @@ function createDb(resp) {
     const db = event.target.result;
     const currencyObjectStore = db.transaction(['currencies']).objectStore('currencies');
     currencyObjectStore.openCursor().onsuccess = event => {
-      let cursor = event.target.result;
+      const cursor = event.target.result;
       if (cursor) {
         const currency = cursor.value;
-        // build currencyListHtml
-        currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
-        console.log('onsuccess', currency.id);
+        // populate currency list
+        document.querySelector('#from-currency').appendChild(`<option value="${currency.id}">${currency.id}</option>`);document.querySelector('#to-currency').appendChild(`<option value="${currency.id}">${currency.id}</option>`);
 
         cursor.continue();
       } else {
@@ -136,7 +122,3 @@ function createDb(resp) {
     };
   };
 }
-
-// populate currency list
-document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>${currencyListHtml}`;
-document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>${currencyListHtml}`;
