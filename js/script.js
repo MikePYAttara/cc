@@ -85,7 +85,7 @@ function createDb(json) {
   const currencies = json['results'];
 
   // create database
-  const req = window.indexedDB.open('MPY-CC');
+  const req = window.indexedDB.open('MPY-CC', 2);
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}`)
   }
@@ -98,7 +98,7 @@ function createDb(json) {
       const currencyObjectStore = db.transaction(['currencies'], 'readwrite').objectStore('currencies');
       for (currency in currencies) {
         // add currency to db 
-        const request = currencyObjectStore.add(currency);
+        const request = currencyObjectStore.add(currency[0]);
 
         request.onsuccess = event => {
           // event.target.result === currency.id
@@ -112,6 +112,19 @@ function createDb(json) {
 
   req.onsuccess = event => {
     const db = event.target.result;
+    const currencyObjectStore = db.transaction(['currencies']).objectStore('currencies');
+    currencyObjectStore.openCursor().onsuccess = event => {
+      let cursor = event.target.result;
+      if (cursor) {
+        const currency = cursor.value;
+        // build currencyListHtml
+        currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
+
+        cursor.continue();
+      } else {
+        console.log('All entries displayed!');
+      };
+    };
   };
 }
 
