@@ -74,7 +74,7 @@ function createDb(data) {
     objectStore.createIndex("id", "id", { unique: true });
     objectStore.transaction.complete = event => {
       const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
-      for( let currency in data) {
+      for( let currency in data['results']) {
         currencyObjectStore.add(currency);
         // build currencyListHtml
         currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
