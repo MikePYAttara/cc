@@ -63,6 +63,7 @@ function convertCurrency() {
 function createDb(data) {
   // create database
   let db;
+  const currencyData = fetch(url).then(res => res.json())
   const req = window.indexedDB.open('MPY-CC');
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}`)
@@ -70,19 +71,20 @@ function createDb(data) {
 
   req.onupgradeneeded = event => {
     db = event.target.result;
-    db.openCursor().onsuccess = event => {
-      const cursor = event.target.result;
-      if (cursor) {
-        objRecord = cursor.value;
+    objectStore = db.createObjectStore("currencies", { keyPath: "id" });
+    objectStore.createIndex("id", "id", { unique: true });
+    objectStore.transaction.complete = event => {
+      const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
+      for( let currency in currencyData) {
+        currencyObjectStore.add(currency);
         // build currencyListHtml
         currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
-        cursor.continue();
       }
-
+        
+      // populate currency list
       document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
       document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
-
-    }
+      }
   }
 
   req.onsuccess = event => db = event.target.result;
