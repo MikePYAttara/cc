@@ -14,25 +14,25 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 </head>
 <body>
-  <div class="container-fluid">
-      <header class="header">MPY Currency Converter</header>
+  <div class="container">
+      <header class="h1">MPY Currency Converter</header>
       <main class="main">
           <!-- Input Area -->
-          <div class="input-group">
-              <input type="text" class="amount" id="amount" placeholder="0">
+          <input type="text" class="amount" id="amount" placeholder="0">
+          <div "btn-group btn-group-lg" role="group">
               <div class="to-text">from</div>
-              <select name="from-currency" id="from-currency" class="currency-list">
+              <select name="from-currency dropdown-menu" id="from-currency" class="currency-list">
                   <option value="">Currency</option>
               </select>
               <div class="to-text">To</div>
-              <select name="to-currency" id="to-currency" class="currency-list">
+              <select name="to-currency dropdown-menu" id="to-currency" class="currency-list">
                   <option value="">Currency</option>
               </select>
           </div>
 
           <!-- Output Area -->
           <div class="output-area">
-              <p class="output-text" id="output">
+              <p class="output-text display1" id="output">
                   <!-- Content from conversion -->
               </p>
           </div>
