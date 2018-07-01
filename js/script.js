@@ -85,4 +85,22 @@ function createDb(data) {
 
     }
   }
+
+  req.onupgradeneeded = event => {
+    const db = event.target.result;
+    const indexID = currencyObjectStore.index("id");
+    indexID.openCursor().onsuccess = event => {
+      const cursor = event.target.result;
+      if (cursor) {
+        objRecord = cursor.value;
+        // build currencyListHtml
+        currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+        cursor.continue();
+      }
+
+      document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+      document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+
+    }
+  }
 }
