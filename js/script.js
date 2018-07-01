@@ -79,7 +79,7 @@ function convertCurrency() {
 // CREATE DATABASE
 function createDb(resp) {
   // create database
-  const req = window.indexedDB.open('MPY-CC', 3);
+  const req = window.indexedDB.open('MPY-CC');
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}. Kindly refresh your browser.`)
   }
@@ -94,10 +94,6 @@ function createDb(resp) {
         const currency = resp.results[key];
         // add currency to db 
         const request = currencyObjectStore.add(currency);
-
-        request.onsuccess = event => {
-          // event.target.result === currency.id
-        };
       };
     };
   };
@@ -113,8 +109,6 @@ function createDb(resp) {
         document.querySelector('#from-currency').innerHTML += `<option value="${currency.id}">${currency.id}</option>`;document.querySelector('#to-currency').innerHTML += `<option value="${currency.id}">${currency.id}</option>`;
 
         cursor.continue();
-      } else {
-        console.log('All entries displayed!');
       };
     };
   };
