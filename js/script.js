@@ -39,7 +39,7 @@ const url = 'https://free.currencyconverterapi.com/api/v5/currencies';
 if (self.XMLHttpRequest) {
   const xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = () => {
-    if (this.readyState === 4 && this.status === 200) {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
       const res = xhttp.responseText;
       currencies = JSON.parse(res);
       createDb(currencies);
@@ -83,6 +83,7 @@ function convertCurrency() {
 function createDb(json) {
   // store currencies
   const currencies = json['results'];
+  console.log(currencies);
   // create database
   const req = window.indexedDB.open('MPY-CC', 2);
   req.onerror = event => {
