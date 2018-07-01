@@ -63,7 +63,7 @@ function convertCurrency() {
 function createDb(data) {
   // create database
   let db;
-  const req = window.indexedDB.open('MPY-CC');
+  const req = window.indexedDB.open('MPY-CC', 1);
   req.onerror = event => {
     alert(`Database error: ${event.target.errorCode}`)
   }
@@ -74,6 +74,21 @@ function createDb(data) {
     objectStore.createIndex("id", "id", { unique: true });
     objectStore.transaction.complete = event => {
       const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
+      // add individual currencies to object store
+      for (var key in data.results) {
+        objRecord = data.results[key];
+        currencyObjectStore.add(objRecord);
+      }
+      const indexID = currencyObjectStore.index("id");
+			indexID.openCursor().onsuccess = event => {
+        const cursor = event.target.result;
+        if (cursor) {
+          objRecord = cursor.value;
+          // build currencyListHtml
+          currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+          cursor.continue();
+        };
+			};
       currencyObjectStore.openCursor().onsuccess = event => {
         const cursor = data['results'];
         if (cursor) {
@@ -82,17 +97,31 @@ function createDb(data) {
           currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
           cursor.continue();
         }
-        else {
-          alert("No more entries!");
-        }
-      }
-        
+        // populate currency list
+        document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+        document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
+      };
+    };
+  };
+
+  req.onsuccess = event => {// db = event.target.result;
+    const db = event.target.result;
+		const currencyObjectStore = db.transaction("Currencies", "readwrite").objectStore("Currencies");
+    const indexID = currencyObjectStore.index("id");
+    
+    indexID.openCursor().onsuccess = event => {
+      const cursor = event.target.result;
+      if (cursor) {
+        objRecord = cursor.value;
+
+        // build currencyListHtml
+        currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+
+        cursor.continue();
+      };
       // populate currency list
       document.querySelector('#from-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
       document.querySelector('#to-currency').innerHTML =`<option value="">Currency</option>` + currencyListHTML;
-      }
-  }
-
-  req.onsuccess = event => db = event.target.result;
+    };
+  };
 }
-
