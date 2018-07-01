@@ -78,11 +78,12 @@ function createDb(data) {
     
     indexID.openCursor().onsuccess = event => {
       const cursor = event.target.result;
+      console.log(cursor);
       if (cursor) {
-        objRecord = cursor.value;
+        currencyRecord = cursor.value;
 
         // build currencyListHtml
-        currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+        currencyListHtml += `<option value=${currencyRecord.id}>${currencyRecord.id}</option>`;
 
         cursor.continue();
       };
@@ -94,24 +95,25 @@ function createDb(data) {
 
   req.onupgradeneeded = event => {
     db = event.target.result;
-    objectStore = db.createObjectStore("currencies", { keyPath: "id" });
+    const objectStore = db.createObjectStore("currencies", { keyPath: "id" });
     objectStore.createIndex("id", "id", { unique: true });
     objectStore.transaction.complete = event => {
       const currencyObjectStore = db.transaction("currencies", "readwrite").objectStore("currencies");
 
       // add individual currencies to object store
-      for (var key in data.results) {
-        objRecord = data.results[key];
-        currencyObjectStore.add(objRecord);
+      for (var currency in data.results) {
+        currencyRecord = data.results[currency];
+        currencyObjectStore.add(currencyRecord);
       }
       const indexID = currencyObjectStore.index("id");
 			indexID.openCursor().onsuccess = event => {
         const cursor = event.target.result;
+        console.log(cursor);
         if (cursor) {
-          objRecord = cursor.value;
+          currencyRecord = cursor.value;
 
           // build currencyListHtml
-          currencyListHtml += `<option value=${objRecord.id}>${objRecord.id}</option>`;
+          currencyListHtml += `<option value=${currencyRecord.id}>${currencyRecord.id}</option>`;
 
           cursor.continue();
         };
