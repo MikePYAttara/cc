@@ -96,7 +96,7 @@ function createDb(json) {
     objectStore.createIndex('id', 'id', { unique : true });
     objectStore.transaction.oncomplete = event => {
       const currencyObjectStore = db.transaction(['currencies'], 'readwrite').objectStore('currencies');
-      currencies.forEach(currency => {
+      for (currency in currencies) {
         // add currency to db 
         const request = currencyObjectStore.add(currency);
 
@@ -106,7 +106,7 @@ function createDb(json) {
           // build currencyListHtml
           currencyListHtml += `<option value=${currency.id}>${currency.id}</option>`;
         };
-      });
+      };
     };
   };
 
