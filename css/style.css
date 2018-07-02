@@ -5,6 +5,29 @@ body {
 
 }
 
+input[type=text], input[type=text]:focus {
+    background-color: transparent;
+    font-size: 4rem;
+    color: aliceblue;
+}
+
+.card {
+    background-color: transparent;
+    height: 90vh;
+    margin: auto;
+    padding: 10px auto;
+    overflow: hidden;
+}
+
+.h1 {
+    text-transform: uppercase;
+}
+
+.output-text {
+    font-size: 5rem;
+    color: aliceblue;
+}
+
 .hashtags {
     display: block;
 }

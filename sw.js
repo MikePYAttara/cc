@@ -2,6 +2,7 @@ const resources = [
   '/',
   '/index.html',
   '/css/style.css',
+  '/css/bootstrap.min.css',
   '/js/script.js'        
 ]
 

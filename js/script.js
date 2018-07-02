@@ -69,12 +69,15 @@ function convertCurrency() {
     if (val) {
       let total = parseFloat(val) * amt;
       total = Math.round(total * 100) / 100;
-      document.querySelector('#output').innerHTML = total;
-    }
+      if (total !== NaN) {
+        document.querySelector('#output').innerHTML = total;
+      } else {
+        document.querySelector('#output').innerHTML = '0';
+      };
+    };
   })
   .catch(err => console.log(err))
 }
-
 
 // CREATE DATABASE
 function createDb(resp) {
