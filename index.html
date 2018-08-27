@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-    <link rel="manifest" href="/assets/icons/site.webmanifest">
-    <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="/assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/manifest/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/manifest/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/manifest/favicon-16x16.png">
+    <link rel="manifest" href="/manifest/site.webmanifest">
+    <link rel="mask-icon" href="/manifest/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/manifest/favicon.ico">
     <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="msapplication-config" content="/assets/icons/browserconfig.xml">
+    <meta name="msapplication-config" content="/manifest/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <title>X-Change</title>
     <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
@@ -20,11 +20,28 @@
 <body>
     <!-- Header -->
     <header class="header">
+        <img src="/assets/logo.svg" alt="Exchange logo" class="logo">
         <h1 class="title">X-Change</h1>
     </header>
     
     <!-- Main application -->
     <main>
+        <!-- Upper currency-group -->
+        <div class="currency-group" role="group">
+            <input type="number" name="upper-amount" id="upper-amount">
+            <section class="upper-currency"></section>
+        </div>
+
+        <!-- Swap Icon -->
+        <div class="swap">
+            <img src="/assets/swap.svg" alt="">
+        </div>
+
+        <!-- Lower currency-group -->
+        <div class="currency-group" role="group">
+            <input type="number" name="lower-amount" id="lower-amount">
+            <section class="upper-currency"></section>
+        </div>
 
     </main>
     
