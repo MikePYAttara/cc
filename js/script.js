@@ -1,51 +1,39 @@
-// GLOBAL VARIABLES 
+// GLOBAL VARIABLES
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
 
 // REGISTER SERVICE WORKER
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/cc/sw.js', { scope : '/cc/'})
+  navigator.serviceWorker.register('/x-change/sw.js', { scope : '/x-change/'})
   .then(reg => {
     // Registration successful
     console.log('Service Worker registered!')
     if (reg.waiting) {
-      self.skipWaiting();  	
-        return;
+      self.skipWaiting();
+        return
       }
 
       if (reg.installing) {
-        return;}
-    
-      if (reg.active) {
-        return;
+        return
       }
 
-  }, err => {
+      if (reg.active) {
+        return
+      }
+
+  })
+  .catch( err => {
     // Registration failed :(
     console.log('ServiceWorker registration failed: ', err);
   });
-};         
-
-// POPULATE CURRENCY LIST
-if (self.XMLHttpRequest) {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = () => {
-    if (xhttp.readyState === 4 && xhttp.status === 200) {
-      const res = xhttp.responseText;
-      currencies = JSON.parse(res);
-      createDb(currencies);
-    };
-  };
-  
-  xhttp.open('GET', 'https://free.currencyconverterapi.com/api/v5/currencies', true);
-  xhttp.send();
 };
 
-// fetch(url).then(res => res.json())
-// .then(json => {
-//   console.log(json);
-//   createDb(json);
-// })
+// POPULATE CURRENCY LIST
+fetch(url, { async: true })
+.then(res.json())
+.then(json => {
+  createDb(json);
+})
 
 
 
@@ -95,7 +83,7 @@ function createDb(resp) {
       const currencyObjectStore = db.transaction(['currencies'], 'readwrite').objectStore('currencies');
       for (let key in resp.results) {
         const currency = resp.results[key];
-        // add currency to db 
+        // add currency to db
         const request = currencyObjectStore.add(currency);
       };
     };
