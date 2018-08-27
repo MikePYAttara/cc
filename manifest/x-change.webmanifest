@@ -2,7 +2,7 @@
     "name": "X-Change",
     "short_name": "X-Change",
     "description": "A simple currency converter",
-    "start_url": "/",
+    "start_url": "/x-change/",
     "icons": [
         {
             "src": "manifest/android-chrome-192x192.png",
@@ -17,5 +17,6 @@
     ],
     "theme_color": "#41518d",
     "background_color": "#41518d",
-    "display": "standalone"
+    "display": "standalone",
+    "scope": "/x-change/"
 }
